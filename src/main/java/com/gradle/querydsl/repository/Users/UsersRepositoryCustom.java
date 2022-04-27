@@ -9,4 +9,5 @@ import com.gradle.querydsl.domain.Users;
 public interface UsersRepositoryCustom {
 
 	List<Users> findUse();
+
 }

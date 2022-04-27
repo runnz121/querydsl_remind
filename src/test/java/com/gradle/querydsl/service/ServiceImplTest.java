@@ -26,8 +26,6 @@ class ServiceImplTest {
 
 
 
-
-
 	@Test
 	public void getUser() {
 
@@ -37,6 +35,20 @@ class ServiceImplTest {
 
 		for(ClassDTO.UserVO users : userList) {
 			System.out.println(users);
+		}
+	}
+
+	@Test
+	public void joinTest() {
+
+		ClassDTO.condition keyword = new ClassDTO.condition("key");
+
+		List<ClassDTO.UserFoodVo> lists = serviceImpl.getJoin(keyword);
+
+		for (ClassDTO.UserFoodVo lis : lists) {
+			System.out.print(lis.getFoodName() + " " + lis.getUserName());
+			System.out.println();
+
 		}
 	}
 

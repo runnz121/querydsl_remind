@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gradle.querydsl.domain.ClassDTO;
 import com.gradle.querydsl.domain.Users;
+import com.gradle.querydsl.repository.Food.FoodRepositoryCustom;
 import com.gradle.querydsl.repository.Users.UsersRepository;
 import com.gradle.querydsl.repository.Users.UsersRepositoryCustom;
+import com.querydsl.core.Tuple;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class ServiceImpl {
 
 	private final UsersRepositoryCustom usersRepository;
+
+	private final FoodRepositoryCustom foodRepositoryCustom;
 
 	//userdata 반환
 	@Transactional(readOnly = true)
@@ -31,7 +35,10 @@ public class ServiceImpl {
 			.collect(Collectors.toList());}
 
 	@Transactional(readOnly = true)
-	public ClassDTO.userFoodVo getJoin(ClassDTO.condition cond){
-		return null;
+	public List<ClassDTO.UserFoodVo> getJoin(ClassDTO.condition cond){
+
+		List<ClassDTO.UserFoodVo> resJoin = foodRepositoryCustom.foodList();
+
+		return resJoin;
 	}
 }

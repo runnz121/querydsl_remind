@@ -34,7 +34,7 @@ public class Controller {
 
 	@GetMapping("/joins")
 	public ResponseEntity<?> getJoin(ClassDTO.condition dto) {
-		ClassDTO.userFoodVo res = serviceImpl.getJoin(dto);
+		List<ClassDTO.UserFoodVo> res = serviceImpl.getJoin(dto);
 		return ResponseEntity.ok(res);
 	}
 }
