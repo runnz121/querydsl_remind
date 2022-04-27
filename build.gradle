@@ -1,0 +1,90 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+
+	//querydsl 추가
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = 'com.gradle'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok'
+
+
+
+	// mysql,jpa 설정
+	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+	testImplementation 'org.testcontainers:junit-jupiter:1.16.3'
+	testImplementation 'org.testcontainers:mysql:1.16.3'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//querydsl 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+//	annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties[1.0.10]}:jpa") // querydsl JPAAnnotationProcessor 사용 지정
+//	annotationProcessor("jakarta.persistence:jakarta.persistence-api") // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+//	annotationProcessor("jakarta.annotation:jakarta.annotation-api") // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
+}
+
+
+//build -> generate -> querydsl에 querydsl 컴파일시 파일 생성됨
+def querydslDir = "$buildDir/generated/querydsl"
+
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+/**
+ * 인텔리제이 Annotation processor 에 생성되는 'src/main/generated' 디렉터리 삭제
+ */
+task cleanGeneatedDir(type: Delete) { // 인텔리제이 annotation processor 가 생성한 Q클래스가 clean 태스크로 삭제되는 게 불편하다면 둘 중에 하나를 선택
+	delete file('src/main/generated')
+}
+
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
