@@ -40,8 +40,8 @@ public class Controller {
 	}
 
 	@GetMapping("/joins")
-	public ResponseEntity<?> getJoin(Model Model ) {
-		List<ClassDTO.UserFoodVo> res = serviceImpl.getJoin();
+	public ResponseEntity<?> getJoin(Model Model, ClassDTO.condition cond ) {
+		List<ClassDTO.UserFoodVo> res = serviceImpl.getJoin(cond);
 
 		ModelAndView modelAndView = new ModelAndView("list");
 

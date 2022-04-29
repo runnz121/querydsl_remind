@@ -43,7 +43,7 @@ class ServiceImplTest {
 
 		ClassDTO.condition keyword = new ClassDTO.condition("key");
 
-		List<ClassDTO.UserFoodVo> lists = serviceImpl.getJoin();
+		List<ClassDTO.UserFoodVo> lists = serviceImpl.getJoin(keyword);
 
 		for (ClassDTO.UserFoodVo lis : lists) {
 			System.out.print(lis.getFoodName() + " " + lis.getUserName());
