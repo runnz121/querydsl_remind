@@ -47,4 +47,10 @@ public class Controller {
 
 		return ResponseEntity.ok(res);
 	}
+
+	@GetMapping("/three")
+	public ResponseEntity<?> three() {
+		List<ClassDTO.threeJoin> lists = serviceImpl.threeJoin();
+		return ResponseEntity.ok(lists);
+	}
 }

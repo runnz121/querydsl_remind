@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gradle.querydsl.domain.Food;
 
-public interface FoodRepository extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, Long>, FoodRepositoryCustom {
 }
