@@ -29,6 +29,9 @@ public class ClassDTO {
 		private Integer page;
 
 		private Integer size;
+
+		public condition(String key) {
+		}
 	}
 
 	@Getter
