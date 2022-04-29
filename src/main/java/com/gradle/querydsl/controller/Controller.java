@@ -2,10 +2,14 @@ package com.gradle.querydsl.controller;
 
 import java.util.List;
 
+import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gradle.querydsl.domain.ClassDTO;
 import com.gradle.querydsl.service.ServiceImpl;
@@ -14,15 +18,18 @@ import com.gradle.querydsl.service.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class Controller {
 
 	private final ServiceImpl serviceImpl;
 
 	@GetMapping("/healthCheck")
-	public String check() {
-		return "health check";
+	public ModelAndView check(Model model) {
+
+		ModelAndView modelAndView = new ModelAndView("health");
+
+		return modelAndView;
 	}
 
 	//user data 반환
@@ -33,8 +40,11 @@ public class Controller {
 	}
 
 	@GetMapping("/joins")
-	public ResponseEntity<?> getJoin(ClassDTO.condition dto) {
-		List<ClassDTO.UserFoodVo> res = serviceImpl.getJoin(dto);
+	public ResponseEntity<?> getJoin(Model Model ) {
+		List<ClassDTO.UserFoodVo> res = serviceImpl.getJoin();
+
+		ModelAndView modelAndView = new ModelAndView("list");
+
 		return ResponseEntity.ok(res);
 	}
 }

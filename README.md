@@ -69,5 +69,3 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom{
 기본형 JPAQueryFactory 주입 받음, RequriedArgsConstrucotr를 통해 생성자 주입
 join, on 으로 설정
 
-
-### 3. 

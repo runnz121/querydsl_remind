@@ -35,7 +35,7 @@ public class ServiceImpl {
 			.collect(Collectors.toList());}
 
 	@Transactional(readOnly = true)
-	public List<ClassDTO.UserFoodVo> getJoin(ClassDTO.condition cond){
+	public List<ClassDTO.UserFoodVo> getJoin(){
 
 		List<ClassDTO.UserFoodVo> resJoin = foodRepositoryCustom.foodList();
 
