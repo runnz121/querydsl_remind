@@ -2,17 +2,21 @@ package com.gradle.querydsl.repository.Food;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.gradle.querydsl.domain.ClassDTO;
 import com.gradle.querydsl.domain.QClassDTO_UserFoodVo;
+import com.gradle.querydsl.domain.QClassDTO_threeJoin;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -77,25 +81,39 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom{
 
 
 	/**
-	 *
-	 * @param 위의 depreacate 메소드를 수정
+	 * 위의 deprecated 된 메소드 대신 사용하는 문법 (count query를 따로 작성하여 page로 반환)
+	 * @param  search, pageable
 	 * @return 상위 메소드와 동일한 결과값을 반환함
+	 * 반환타입이 list가 아닌 Page임(jpa pagging)
 	 */
 
 	@Override
-	public List<ClassDTO.UserFoodVo> paginList2(ClassDTO.condition search, Pageable pageable) {
+	public Page<ClassDTO.UserFoodVo> paginList2(ClassDTO.condition search, Pageable pageable) {
 
 		List<ClassDTO.UserFoodVo> pagingList = jpaQueryFactory
 			// @AllArgsConstructor -> @QueryProjection 붙임
 			.select(new QClassDTO_UserFoodVo (
-
+				users.userName,
+				food.name
 				))
+			.from(food)
+			.join(coolTime)
+			.on(food.id.eq(coolTime.foodId))
+			.join(users)
+			.on(users.id.eq(coolTime.userId))
+			.offset(pageable.getOffset())
+			.limit(pageable.getPageSize())
+			.fetch();
 
-		return null;
+
+		JPQLQuery<Long> countQuery = jpaQueryFactory
+			.select(users.count())
+			.from(users)
+			.leftJoin(coolTime)
+			.on(coolTime.userId.eq(users.id));
+
+		return PageableExecutionUtils.getPage(pagingList, pageable, countQuery::fetchOne);
 	}
-
-
-
 
 
 

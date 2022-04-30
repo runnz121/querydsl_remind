@@ -19,7 +19,6 @@ import lombok.Setter;
 @Setter
 public class ClassDTO {
 
-	@AllArgsConstructor
 	@NoArgsConstructor
 	@Getter
 	public static class condition {
@@ -30,8 +29,13 @@ public class ClassDTO {
 
 		private Integer size;
 
-		public condition(String key) {
+		@Builder
+		public condition(String key, Integer page, Integer size) {
+			this.keyWord = key;
+			this.page = page;
+			this.size = size;
 		}
+
 	}
 
 	@Getter
@@ -66,7 +70,6 @@ public class ClassDTO {
 	}
 
 	@Getter
-	@AllArgsConstructor
 	@NoArgsConstructor
 	public static class threeJoin {
 
@@ -75,6 +78,13 @@ public class ClassDTO {
 		private String foodName;
 
 		private Long coolTimeId;
+
+		@QueryProjection
+		public threeJoin (String userName, String foodName, Long coolTimeId) {
+			this.userName = userName;
+			this.foodName = foodName;
+			this.coolTimeId = coolTimeId;
+		}
 
 	}
 }

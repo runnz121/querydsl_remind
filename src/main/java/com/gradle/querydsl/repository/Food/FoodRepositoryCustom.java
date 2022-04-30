@@ -2,6 +2,7 @@ package com.gradle.querydsl.repository.Food;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,5 @@ public interface FoodRepositoryCustom {
 	PageImpl<ClassDTO.UserFoodVo> pagingList(ClassDTO.condition search);
 
 	//위의 메소드와 동일한 결과값을 반환하는 최신 문법
-	List<ClassDTO.UserFoodVo> paginList2(ClassDTO.condition search, Pageable pageable);
+	Page<ClassDTO.UserFoodVo> paginList2(ClassDTO.condition search, Pageable pageable);
 }
