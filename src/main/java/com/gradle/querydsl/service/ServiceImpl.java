@@ -4,15 +4,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gradle.querydsl.domain.BoardDto;
 import com.gradle.querydsl.domain.ClassDTO;
 import com.gradle.querydsl.domain.Users;
 import com.gradle.querydsl.repository.Food.FoodRepository;
 import com.gradle.querydsl.repository.Food.FoodRepositoryCustom;
 import com.gradle.querydsl.repository.Users.UsersRepository;
 import com.gradle.querydsl.repository.Users.UsersRepositoryCustom;
+import com.gradle.querydsl.repository.board.BoardRepository;
 import com.querydsl.core.Tuple;
 
 import lombok.NoArgsConstructor;
@@ -25,6 +29,8 @@ public class ServiceImpl {
 	private final UsersRepositoryCustom usersRepository;
 
 	private final FoodRepository foodRepositoryCustom;
+
+	private final BoardRepository boardRepository;
 
 	//userdata 반환
 	@Transactional(readOnly = true)
@@ -48,5 +54,10 @@ public class ServiceImpl {
 	public List<ClassDTO.threeJoin> threeJoin() {
 		List<ClassDTO.threeJoin> res = usersRepository.finds();
 		return res;
+	}
+
+	@Transactional(readOnly = true)
+	public Page<BoardDto> findBoardsDto(Pageable page) {
+		return boardRepository.findBoards(page);
 	}
 }

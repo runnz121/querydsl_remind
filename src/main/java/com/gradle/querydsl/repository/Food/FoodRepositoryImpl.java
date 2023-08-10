@@ -85,11 +85,11 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom{
 	@Override
 	public List<ClassDTO.UserFoodVo> paginList2(ClassDTO.condition search, Pageable pageable) {
 
-		List<ClassDTO.UserFoodVo> pagingList = jpaQueryFactory
-			// @AllArgsConstructor -> @QueryProjection 붙임
-			.select(new QClassDTO_UserFoodVo (
-
-				))
+		// List<ClassDTO.UserFoodVo> pagingList = jpaQueryFactory
+		// 	// @AllArgsConstructor -> @QueryProjection 붙임
+		// 	.select(new QClassDTO_UserFoodVo (
+		//
+		// 		))
 
 		return null;
 	}

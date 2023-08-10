@@ -53,6 +53,12 @@ dependencies {
 	//querydsl 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	//https://adunhansa.tistory.com/225
+	// sqltemplate 사용하기 위해 추가 implementation으로 해야된다
+	implementation "com.querydsl:querydsl-sql:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-sql-spring:${queryDslVersion}"
+
 //	annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties[1.0.10]}:jpa") // querydsl JPAAnnotationProcessor 사용 지정
 //	annotationProcessor("jakarta.persistence:jakarta.persistence-api") // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
 //	annotationProcessor("jakarta.annotation:jakarta.annotation-api") // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
